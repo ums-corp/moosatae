@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0, viewport-fit=cover"/>
+        <meta name="description" content="MooSaTae Member In Line LIFF">
+        <meta name="author" content="UMS Webservice">
+        <!-- <meta name="keywords" content=""> -->
+
+        <title>Moo-SaTae-Member</title>
+        <link rel="stylesheet" href="style.css">
+       
+
+        
+      
+
+    </head>
+    <body>
+
+        <div>
+            <img id="pictureUrl" alt="" src="">
+            <p id="displayName"><b>ชื่อผู้ใช้ : </b></p>
+            <p id="email"><b>อีเมล์ : </b></p>
+            <!-- <p id="point"><b>คะแนนสะสะม : </b></p> -->
+            <container id="qrInfo">
+                <p id="sTime"><b>วันที่-เวลาเริ่มต้น : </b></p>
+                <p id="eTime"><b>วันที่-เวลาสิ้นสุด : </b></p>
+                <img id="genQR" alt="" width="156px" height="156px" src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=line"/>
+               
+            </container>
+
+            <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+            <script>
+                let toDay = new Date().toISOString().slice(0, 10);
+                let nowTime = new Date().toLocaleTimeString('en-US', {timeZone: 'Asia/Bangkok', hour12: false,});
+                let endTime = new Date().setMinutes(new Date().getMinutes() + 30);
+                endTime = new Date(endTime).toLocaleTimeString('en-US', {timeZone: 'Asia/Bangkok',hour12: false,});
+
+        
+
+                async function getUserProfile(){
+                    const profile = await liff.getProfile();
+                    document.getElementById('pictureUrl').src = profile.pictureUrl;
+                    document.getElementById('displayName').append(profile.displayName);
+                    document.getElementById('email').append(liff.getDecodedIDToken().email);
+
+                    let prefix = profile.userId.substring(0, 3);
+                    let subfix = profile.userId.substring(profile.userId.length, 30);
+                    let memberId = subfix + profile.userId.substring(3, 30) + prefix;
+                    
+
+                    let sDate = toDay + ' ' + nowTime;
+                    let eDate = toDay + ' ' + endTime;
+                    let timeReg = toDay + ',' + nowTime;
+                    let memberQR = memberId + ',30,' + timeReg;
+
+                    document.getElementById('sTime').append(sDate);
+                    document.getElementById('eTime').append(eDate);
+                    document.getElementById('genQR').src = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${memberQR}`;
+
+                    // const apiUrl = `https://ums.dyndns.info:9920/v1/memberVerify/${memberId}`;
+                    // await memberInfo(apiUrl).then(item => {
+                    //     document.getElementById('point').append(item.VerifyMember[0].memberPoint);
+                    // }).catch(error => {
+                    //     document.getElementById('point').append("00");
+                    // });
+                }
+
+                async function main(){
+                    await liff.init({ liffId: '1657610997-3K69qYjR', withLoginOnExternalBrowser: true}); //, withLoginOnExternalBrowser: true
+                 
+                    if(liff.isLoggedIn()){ getUserProfile(); }
+                    
+                
+                }
+
+                async function memberInfo(apiUrl){
+                    // apiUrl = `https://ums.dyndns.info:9920/v1/memberVerify/084-165-2816`;
+
+                    let reponse = await fetch(apiUrl);
+                    let result = await reponse.json();
+                    return result;
+
+                }
+
+                main();
+            </script>
+
+        </div>
+
+
+
+
+     
+       
+
+        <!-- <script src="app.js"></script> -->
+    </body>
+</html>

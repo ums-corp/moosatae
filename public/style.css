@@ -1,0 +1,57 @@
+h1,
+h2 {
+  font-family: Lato;
+}
+
+body {
+  margin: 20px;
+  color: blue;
+  background-color: #d1f5d3;
+}
+
+button {
+  /* display: none; */
+  width: 100%;
+  padding: 8px 0;
+  margin: 8px auto;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8xp;
+}
+
+p {
+  border-bottom: 1px dashed yellowgreen;
+}
+
+#pictureUrl {
+  margin: 0 auto;
+  width: 32%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  box-pack: center;
+  box-align: center;
+  -moz-border-radius: 256px;
+  -webkit-border-radius: 256px;
+  border-radius: 256px;
+}
+
+#genQR {
+  margin: 0 auto;
+  /* width: 80%; */
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  box-pack: center;
+  box-align: center;
+  border: 2px solid green;
+  border-radius: 25px;
+}
